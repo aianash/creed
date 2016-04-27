@@ -5,10 +5,12 @@ using namespace Creed::Index;
 MTable::MTable(const std::string &path, int flags) {}
 MTable::~MTable() {}
 
+//
 void MTable::insert(entry_cupr entry) {
   insert(std::move(entry), 0);
 }
 
+//
 void MTable::insert(entry_cupr entry, int level) {
   auto node = root;
 
@@ -23,13 +25,15 @@ void MTable::insert(entry_cupr entry, int level) {
   writeNode(node);
 }
 
-void MTable::split(node_spr &node, entry_cupr entry) {
+//
+void MTable::split(const node_spr &node, entry_cupr entry) {
   node->insert(std::move(entry)); // Note: This is only a temporary insertion
 
+  node_spr tnode = node;
   auto pentryl = std::make_unique<RoutingEntry>();
   auto pentryr = std::make_unique<RoutingEntry>();
 
-  Node *rNode = node->partition(pentryl, pentryr);
+  node_spr rNode = node->partition(pentryl, pentryr);
 
   if(node->isRoot()) {
     auto root = makeNewRoot();
@@ -51,21 +55,18 @@ void MTable::flush() {}
 bool MTable::sync() { return true; }
 
 
-node_spr MTable::readNode(NodeId id) const {
+node_spr MTable::readNode(nodeid_t id) const {
   return std::make_shared<Node>(id);
 }
 
-void MTable::writeNode(node_spr &node) {}
-
-Entry *MTable::createEntry() { return NULL; }
+void MTable::writeNode(const node_spr &node) {}
 
 node_spr MTable::makeNewRoot() {
-  uint16_t segno = 1;
-  uint16_t pageno = 1;
-  uuid_t uuid;
-  uuid_generate(uuid);
+  // uint16_t segno = 1;
+  // uint16_t pageno = 1;
+  // uuid_t uuid;
+  // uuid_generate(uuid);
   this->levels += 1;
-  NodeId id{uuid, levels, segno, pageno};
-  root = std::make_shared<Node>(id);
+  root = std::make_shared<Node>(nodeid_t::create(levels, 1, 1));
   return root;
 }
