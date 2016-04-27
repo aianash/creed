@@ -7,4 +7,6 @@ EXTRA_DIST +=\
 
 lib_src +=\
 	index/datastore.cc\
-	index/mtable.cc
+	index/mtable.cc\
+	index/node.cc\
+	index/entry.cc

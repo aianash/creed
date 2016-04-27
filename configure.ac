@@ -6,7 +6,9 @@ AC_SUBST([LIBRARY_VERSION_INFO])
 LIBRARY_VERSION_SUFFIX=-1.0
 AC_SUBST([LIBRARY_VERSION_SUFFIX])
 
-AM_INIT_AUTOMAKE([1.11 -Wportability tar-ustar no-dist-gzip dist-xz std-options])
+AM_INIT_AUTOMAKE([1.14 -Wportability tar-ustar no-dist-gzip dist-xz std-options foreign subdir-objects])
+: ${CXXFLAGS="-O3"}
+
 AC_CONFIG_HEADERS([config.h])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -25,32 +27,17 @@ LT_INIT([disable-static])
 NO_UNDEFINED=
 AC_SUBST([NO_UNDEFINED])
 
-AC_LANG([C++])
-AC_PROG_CXX
-dnl AC_PROG_LIBTOOL
-
-dnl m4_include([m4/ax_cxx_compile_stdcxx_11.m4])
-dnl AX_CHECK_COMPILE_FLAG([-std=c++11], [compile_flag_cxx11=yes])
-dnl if test "x${compile_flag_cxx11}" = "xyes"; then
-dnl    CXXFLAGS="-std=c++11 $CXXFLAGS"
-dnl    CXX_STANDARD=201103L
-dnl else
-dnl    CXX_STANDARD=199711L
-dnl fi
-
-dnl CXXFLAGS = "-std=c++11 $CXXFLAGS"
-
-dnl AC_SUBST([CXX_STANDARD])
-
 AC_CANONICAL_HOST
+
+AC_LANG([C++])
+AC_PROG_CXX([g++-5])
+
 
 CREED_LDFLAGS=
 CREED_LIBS=
 AC_SUBST([CREED_LDFLAGS])
 AC_SUBST([CREED_LIBS])
 
-AC_CONFIG_FILES([
-    Makefile
-])
+AC_CONFIG_FILES([Makefile])
 
 AC_OUTPUT

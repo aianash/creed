@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = 1.5 subdir-objects
 ACLOCAL_AMFLAGS = -I m4
 
-AM_CPPFLAGS = -I$(top_srcdir)/common
+AM_CPPFLAGS = -I$(top_srcdir)/common -std=c++14
 
 SUBDIRS = .
 
@@ -25,6 +25,6 @@ EXTRA_DIST =
 lib_src =
 
 
-include query/Makefile.mk
 include common/Makefile.mk
+include search/Makefile.mk
 include index/Makefile.mk
