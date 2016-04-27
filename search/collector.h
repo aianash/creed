@@ -2,7 +2,7 @@
 #define CREED_INCLUDED_COLLECTOR_H
 
 namespace Creed {
-namespace Query {
+namespace Search {
 
 class Collector {
 public:
